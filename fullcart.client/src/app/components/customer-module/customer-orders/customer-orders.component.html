@@ -1,0 +1,84 @@
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Orders</h2>
+
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="createdAt">
+            <mat-header-cell *matHeaderCellDef> Created At </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.createdAt | date : "medium" }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.status }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="total">
+            <mat-header-cell *matHeaderCellDef> Total </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.total }} LE
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="orderItems">
+            <mat-header-cell *matHeaderCellDef> Products </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <table class="table table-striped table-bordered" role="grid">
+                <tr>
+                  <th>product</th>
+                  <th>price</th>
+                  <th>qty</th>
+                  <th>total</th>
+                </tr>
+                <tr *ngFor="let item of element.orderItems">
+                  <td>{{ item.productName }}</td>
+                  <td>{{ item.price }}</td>
+                  <td>{{ item.quantity }}</td>
+                  <td>{{ item.totalPrice }} LE</td>
+                </tr>
+              </table>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cancel">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                *ngIf="element.status == 'OrderCreated'"
+                mat-icon-button
+                matTooltip="Click to cancel"
+                class="iconbutton"
+                color="primary"
+                (click)="cancelOrder(element)"
+              >
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </table>
+
+        <!-- Pagination -->
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+          (page)="loadData($event.pageIndex, $event.pageSize)"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

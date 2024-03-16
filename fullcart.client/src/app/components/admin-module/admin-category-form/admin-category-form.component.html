@@ -1,0 +1,67 @@
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title" *ngIf="!categoryId">Add New Category</h2>
+        <h2 class="card-title" *ngIf="categoryId">Edit Category</h2>
+
+        <form
+          class="form-horizontal"
+          id="categoryForm"
+          [formGroup]="categoryForm"
+          (submit)="save()"
+        >
+          <div class="form-group row">
+            <label
+              for="name"
+              class="col-sm-3 text-end control-label col-form-label"
+              >Category Name</label
+            >
+            <div class="col-sm-6">
+              <input
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Category Name"
+                formControlName="name"
+              />
+            </div>
+          </div>
+          <span *ngIf="errorMessage">
+            <div
+              class="alert alert-danger"
+              role="alert"
+              *ngFor="let error of errorMessage.errors"
+            >
+              {{ error.description }}
+            </div>
+          </span>
+          <div class="border-top">
+            <div class="card-body">
+              <a
+                class="btn btn-link text-decoration-none"
+                routerLink="/admin/categoryList"
+                >Back to Category list</a
+              >
+              <button
+                type="submit"
+                class="btn btn-primary"
+                [disabled]="categoryForm.invalid"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

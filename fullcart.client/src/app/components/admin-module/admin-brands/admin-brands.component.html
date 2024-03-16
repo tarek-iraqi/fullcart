@@ -1,0 +1,70 @@
+<div class="preloader">
+  <div class="lds-ripple">
+    <div class="lds-pos"></div>
+    <div class="lds-pos"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h2 class="card-title">Brands</h2>
+        <div class="card-actions">
+          <button
+            type="button"
+            class="btn btn-success text-white"
+            (click)="addNewBrand()"
+          >
+            Add New Brand
+          </button>
+        </div>
+
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> ID </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{ element.name }} </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="numberOfProducts">
+            <mat-header-cell *matHeaderCellDef>
+              Number Of Products
+            </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              {{ element.numberOfProducts }}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="edit">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let element">
+              <button
+                mat-icon-button
+                matTooltip="Click to Edit"
+                class="iconbutton"
+                color="primary"
+                (click)="editBrand(element)"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+        </table>
+
+        <!-- Pagination -->
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+          (page)="loadData($event.pageIndex, $event.pageSize)"
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

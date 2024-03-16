@@ -1,0 +1,57 @@
+<div class="alert alert-danger" role="alert" *ngIf="errorMessages">
+  <div *ngFor="let error of errorMessages">
+    {{ error.description }}
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-body">
+    <h2 class="card-title mb-0">Cart</h2>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Product</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Total</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cartItems; let i = index">
+        <th scope="row">{{ i + 1 }}</th>
+        <td>{{ item.productName }}</td>
+        <td>{{ item.quantity }}</td>
+        <td>{{ item.price }}</td>
+        <td>{{ item.totalPrice }} LE</td>
+        <td>
+          <button
+            class="btn btn-danger btn-sm text-white"
+            type="button"
+            (click)="removeItem(item.productId)"
+          >
+            Remove
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="totalCart">
+        <th></th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>{{ totalCart }} LE</td>
+        <td>
+          <button
+            class="btn btn-success btn-sm text-white"
+            type="button"
+            (click)="placeOrder()"
+          >
+            Place Order
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
